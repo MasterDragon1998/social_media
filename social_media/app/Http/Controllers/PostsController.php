@@ -9,6 +9,15 @@ use App\Post;
 class PostsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -45,7 +54,7 @@ class PostsController extends Controller
 
         //Check if loged in
         if(!Auth::check()){
-            return redirect('/')->with('alert', 'You need to log in to create a post');
+            return redirect('/')->with('alert', 'You need to log in to create a post')->with('alert', 'you need to be loged in to post a Post');
         }
 
         //Create Post
