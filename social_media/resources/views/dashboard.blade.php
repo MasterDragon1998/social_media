@@ -10,15 +10,17 @@
                 <div class="card-body">
                     <h2>Your Posts</h2>
                     @if(count($posts) > 0)
-                        <table>
+                        <table class="table table-striped">
                             <tr>
                                 <th>Title</th>
                                 <th>Created At</th>
+                                <th>Edit</th>
                             </tr>
                             @foreach($posts as $post)
                                 <tr>
                                     <td><a href="{{url('/posts/'.$post->id)}}">{{$post->title}}</a></td>
                                     <td>{{$post->created_at}}</td>
+                                    <td><a href="{{ url('posts/'.$post->id.'/edit') }}" class="btn btn-secondary">Edit</a></td>
                                 </tr>
                             @endforeach
                         </table>

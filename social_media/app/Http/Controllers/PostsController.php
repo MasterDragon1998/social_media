@@ -88,7 +88,16 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Find Post
+        $post = Post::find($id);
+
+        //Authorize edit
+        if(Auth::id() !== $post->user_id){
+            return redirect('/posts/'.$post->id)->with('alert', 'You can only edit your own posts');
+        }
+
+        //Returns view
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -100,7 +109,26 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Validate form inputs
+        $this->validate($request, [
+                'title' => 'required',
+                'body' => 'required'
+            ]);
+
+        //Find Post
+        $post = Post::find($id);
+
+        //Authorize
+        if(Auth::id() != $post->user_id){
+            return redirect('/posts/'.$post->id)->with('alert', 'You can only edit your own posts!');
+        }
+
+        //Update Post
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('/posts/'.$post->id)->with('success', 'Post Edited Successfully!');
     }
 
     /**
