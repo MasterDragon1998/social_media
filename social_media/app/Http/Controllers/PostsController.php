@@ -145,6 +145,7 @@ class PostsController extends Controller
     {
         //Receive Post
         $post = Post::find($id);
+        $votes = $post->votes;
 
         //Authorize
         if(Auth::id() !== $post->user_id){
@@ -153,6 +154,9 @@ class PostsController extends Controller
 
         //Destroy post
         $post->delete();
+        foreach($votes as $vote){
+            $vote->delete();
+        }
 
         //return redirect
         return redirect('/dashboard')->with('success', 'Post Deleted!');

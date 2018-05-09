@@ -12,7 +12,11 @@
 */
 
 Route::get('/', 'PagesController@index');
+
 Route::resource('/posts', 'PostsController');
+
+Route::resource('/votes', 'VotesController', ['only' => ['index']]);
+Route::post('/votes/store/{post_id}', 'VotesController@store');
 
 Auth::routes();
 
