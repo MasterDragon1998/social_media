@@ -23,6 +23,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = auth()->user()->posts;
+        return view('dashboard')->with('posts', $posts);
     }
 }
