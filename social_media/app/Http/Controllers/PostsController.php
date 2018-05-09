@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Post;
 
@@ -25,7 +26,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -36,7 +37,26 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validate Request
+        $this->validate($request, [
+                'title' => 'required',
+                'body' => 'required'
+            ]);
+
+        //Check if loged in
+        if(!Auth::check()){
+            return redirect('/')->with('alert', 'You need to log in to create a post');
+        }
+
+        //Create Post
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->user_id = Auth::id();
+        $post->save();
+
+        //Sends the user to /post page
+        return redirect('/posts')->with('success', 'Post '.$post->title.' Created');
     }
 
     /**
