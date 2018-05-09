@@ -76,7 +76,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        if(!$post = Post::find($id)){
+            return view('posts.postnotfound');
+        }
         return view('posts.show')->with('post', $post);
     }
 
@@ -89,7 +91,9 @@ class PostsController extends Controller
     public function edit($id)
     {
         //Find Post
-        $post = Post::find($id);
+        if(!$post = Post::find($id)){
+            return redirect('posts/postnotfound');
+        }
 
         //Authorize edit
         if(Auth::id() !== $post->user_id){
@@ -139,6 +143,18 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Receive Post
+        $post = Post::find($id);
+
+        //Authorize
+        if(Auth::id() !== $post->user_id){
+            return redirect('/posts/'.$post->id)->with('alert', 'You can only delete your own posts!');
+        }
+
+        //Destroy post
+        $post->delete();
+
+        //return redirect
+        return redirect('/dashboard')->with('success', 'Post Deleted!');
     }
 }
