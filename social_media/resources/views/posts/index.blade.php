@@ -10,7 +10,7 @@
 				</div>
 				<div class="card-footer">
 					<small>Created at: {{$post->created_at}}</small>
-					<small>Created by: {{$post->user->name}}</small>
+					<small class="float-right">Created by: {{$post->user->name}}</small>
 				</div>
 			</div>
 		@endforeach
