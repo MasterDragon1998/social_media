@@ -96,8 +96,10 @@ class PostsController extends Controller
         }
 
         //Authorize edit
-        if(Auth::id() !== $post->user_id){
-            return redirect('/posts/'.$post->id)->with('alert', 'You can only edit your own posts');
+        if(Auth::id() !== $post->user_id && !Auth::user()->isAdmin){
+            if(!Auth::user()->isAdmin){
+              return redirect('/posts/'.$post->id)->with('alert', 'You can only edit your own posts');
+            }
         }
 
         //Returns view
@@ -123,7 +125,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         //Authorize
-        if(Auth::id() != $post->user_id){
+        if(Auth::id() !== $post->user_id && !Auth::user()->isAdmin){
             return redirect('/posts/'.$post->id)->with('alert', 'You can only edit your own posts!');
         }
 
@@ -148,7 +150,7 @@ class PostsController extends Controller
         $votes = $post->votes;
 
         //Authorize
-        if(Auth::id() !== $post->user_id){
+        if(Auth::id() !== $post->user_id && !Auth::user()->isAdmin){
             return redirect('/posts/'.$post->id)->with('alert', 'You can only delete your own posts!');
         }
 

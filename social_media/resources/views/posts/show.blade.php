@@ -18,7 +18,7 @@
 				{{Form::button('Upvote', ['name' => 'vote', 'value' => 1,'type' => 'submit', 'class' => 'btn btn-success'])}}
 				{{Form::button('Downvote', ['name' => 'vote', 'value' => 0,'type' => 'submit', 'class' => 'btn btn-danger'])}}
 			{!!Form::close()!!}
-			@if(Auth::id() === $post->user_id)
+			@if(Auth::id() === $post->user_id || Auth::user()->isAdmin)
 				<br />
 				<a href="{{ url('/posts/'.$post->id.'/edit') }}" class="btn btn-secondary float-left">Edit</a>
 				{!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST'])!!}
