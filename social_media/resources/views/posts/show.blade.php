@@ -28,4 +28,40 @@
 			@endif
 		</div>
 	</div>
+	<div class="card">
+		<div class="card-header">
+			<h2>Comments</h2>
+		</div>
+		<div class="card-body">
+			@if(count($post->comments) > 0)
+				@foreach($post->comments as $comment)
+					<div class="card">
+						<div class="card-header">
+							{{$comment->user->name}}
+						</div>
+						<div class="card-body">
+							{!!nl2br($comment->body)!!}
+						</div>
+					</div>
+				@endforeach
+			@else
+				<h3>No comments found</h3>
+			@endif
+			<div class="card">
+				<div class="card-header">
+					{{Auth::user()->name}}
+				</div>
+				<div class="card-body">
+					{{Form::open(['action' => 'CommentsController@store', 'method' => 'POST'])}}
+						<div class="form-group">
+							{{Form::label('body', 'Comment')}}
+							{{Form::textarea('body', '', ['class' => 'form-control', 'style' => 'height:60px;resize:none;'])}}
+						</div>
+						{{Form::hidden('post_id', $post->id)}}
+						{{Form::submit('Comment!', ['class' => 'btn btn-success'])}}
+					{{Form::close()}}
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection

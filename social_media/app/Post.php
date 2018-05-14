@@ -14,4 +14,7 @@ class Post extends Model
     public function votes(){
     	return $this->hasMany('App\Vote');
     }
+    public function comments(){
+    	return $this->hasMany('App\Comment');
+    }
 }

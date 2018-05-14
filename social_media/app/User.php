@@ -33,4 +33,7 @@ class User extends Authenticatable
     public function votes(){
         return $this->hasMany('App\Vote');
     }
+    public function comment(){
+        return $this->hasMany('App\Comment');
+    }
 }
