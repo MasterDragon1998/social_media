@@ -7,6 +7,7 @@
 			<tr>
 				<th>Post Title</th>
 				<th>Vote</th>
+				<th>Created at</th>
 			</tr>
 			@foreach($votes as $vote)
 				<tr>
@@ -18,6 +19,7 @@
 							<span class="text-danger">Downvote</span>
 						@endif
 					</td>
+					<td>{{$vote->created_at}}</td>
 				</tr>
 			@endforeach
 		</table>
