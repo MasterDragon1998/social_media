@@ -11,6 +11,7 @@
                     <h2>Your Posts</h2>
                     <a class="btn btn-secondary" href="{{ url('/posts/create') }}">Create Post</a>
                     <a class="btn btn-secondary" href="{{ url('/votes') }}">Your Votes</a>
+                    <a class="btn btn-secondary" href="{{ url('/comments') }}">Your Comments</a>
                     @if(count($posts) > 0)
                         <table class="table table-striped">
                             <tr>

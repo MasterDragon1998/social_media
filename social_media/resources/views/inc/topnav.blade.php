@@ -33,6 +33,7 @@
                             <a class="dropdown-item" href="{{ url('/dashboard') }}">{{__('Dashboard')}}</a>
                             <a class="dropdown-item" href="{{ url('/posts/create') }}">Create Post</a>
                             <a class="dropdown-item" href="{{ url('/votes') }}">Your Votes</a>
+                            <a class="dropdown-item" href="{{ url('/comments') }}">Your Comments</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
