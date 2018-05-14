@@ -34,13 +34,21 @@
 		</div>
 		<div class="card-body">
 			@if(count($post->comments) > 0)
-				@foreach($post->comments as $comment)
+				<?php
+					$comments = $post->comments->sortByDesc(function($comment){
+						return $comment->created_at;
+					})
+				?>
+				@foreach($comments as $comment)
 					<div class="card">
 						<div class="card-header">
 							{{$comment->user->name}}
 						</div>
 						<div class="card-body">
 							{!!nl2br($comment->body)!!}
+						</div>
+						<div class="card-footer">
+							Created at: {{$comment->created_at}}
 						</div>
 					</div>
 				@endforeach

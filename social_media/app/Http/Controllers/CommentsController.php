@@ -24,7 +24,10 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Auth::user()->comments->sortByDesc(function($comment){
+            return $comment->created_at;
+        });
+        return view('comments.index')->with('comments', $comments);
     }
 
     /**
@@ -104,6 +107,19 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Retrieve comment
+        $comment = Comment::findOrFail($id);
+        $post_id = $comment->post->id;
+
+        //Authorize
+        if(Auth::id() !== $comment->user_id){
+            return redirect('/posts/'.$post_id)->with('alert', 'You can only delete your own comments');
+        }
+
+        //Destroy comment
+        $comment->delete();
+
+        //redirect
+        return redirect('/posts/'.$post_id)->with('success', 'Comment Deleted');
     }
 }

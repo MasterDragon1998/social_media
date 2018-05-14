@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,7 +24,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $posts = auth()->user()->posts;
+        $posts = Auth::user()->posts->sortByDesc(function($post){
+            return $post->created_at;
+        });
         return view('dashboard')->with('posts', $posts);
     }
 }
