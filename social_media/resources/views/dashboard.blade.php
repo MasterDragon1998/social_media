@@ -16,6 +16,8 @@
                         <table class="table table-striped">
                             <tr>
                                 <th>Title</th>
+                                <th>Votes</th>
+                                <th>Comments</th>
                                 <th>Created At</th>
                                 <th>Edit</th>
                                 <th>Remove</th>
@@ -23,6 +25,12 @@
                             @foreach($posts as $post)
                                 <tr>
                                     <td><a href="{{url('/posts/'.$post->id)}}">{{$post->title}}</a></td>
+                                    <td>
+                                        <span class="text-success">{{count($post->votes->where('isUpvote',true))}} </span>
+                                        /
+                                        <span class="text-danger"> {{count($post->votes->where('isUpvote',false))}}</span>
+                                    </td>
+                                    <td>{{count($post->comments)}}</td>
                                     <td>{{$post->created_at}}</td>
                                     <td><a href="{{ url('posts/'.$post->id.'/edit') }}" class="btn btn-secondary">Edit</a></td>
                                     <td>

@@ -28,6 +28,7 @@
 			@endif
 		</div>
 	</div>
+
 	<div class="card">
 		<div class="card-header">
 			<h2>Comments</h2>
@@ -49,6 +50,13 @@
 						</div>
 						<div class="card-footer">
 							Created at: {{$comment->created_at}}
+							@if($comment->user_id === Auth::id())
+								<br />
+								{{Form::open(['action' => ['CommentsController@destroy', $comment->id]])}}
+									{{Form::hidden('_method', 'DELETE')}}
+									{{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+								{{Form::close()}}
+							@endif
 						</div>
 					</div>
 				@endforeach
